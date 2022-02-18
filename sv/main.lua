@@ -216,7 +216,7 @@ AddEventHandler('orp:weed:server:waterPlant', function(plantId)
     end
 
     Player.Functions.RemoveItem('water_bottle', 1)
-    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items['raine'], "remove")
+    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items['water_bottle'], "remove")
     TriggerEvent('orp:weed:server:updatePlants')
 end)
 
