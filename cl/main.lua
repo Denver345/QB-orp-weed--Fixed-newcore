@@ -1,17 +1,7 @@
-QBCore = nil
+local QBCore = exports['qb-core']:GetCoreObject()
 
 isLoggedIn = false
 PlayerJob = {}
-
-Citizen.CreateThread(function() 
-    while true do
-        Citizen.Wait(10)
-        if QBCore == nil then
-            TriggerEvent("QBCore:GetObject", function(obj) QBCore = obj end)    
-            Citizen.Wait(200)
-        end
-    end
-end)
 
 RegisterNetEvent('QBCore:Client:OnPlayerLoaded')
 AddEventHandler('QBCore:Client:OnPlayerLoaded', function()
@@ -234,11 +224,11 @@ Citizen.CreateThread(function()
                             DrawText3D(v.x, v.y, v.z - 0.18, '~b~G~w~ - Water      ~y~H~w~ - Feed')
                             if IsControlJustReleased(0, Keys["G"]) then
                                 if v.id == plant.id then
-                                    TriggerServerEvent('orp:server:checkPlayerHasThisItem', 'water_bottle', 'orp:weed:client:waterPlant', true)
+                                    TriggerServerEvent('orp:server:checkPlayerHasThisItem', 'raine', 'orp:weed:client:waterPlant', true)
                                 end
                             elseif IsControlJustReleased(0, Keys["H"]) then
                                 if v.id == plant.id then
-                                    TriggerServerEvent('orp:server:checkPlayerHasThisItem', 'fertilizer', 'orp:weed:client:feedPlant', true)
+                                    TriggerServerEvent('orp:server:checkPlayerHasThisItem', 'weed_nutrition', 'orp:weed:client:feedPlant', true)
                                 end
                             end
                         else
