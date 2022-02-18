@@ -26,10 +26,10 @@ Config.QualityDegrade = {min = 8, max = 12}
 Config.GrowthIncrease = {min = 10, max = 20}
 
 Config.YieldRewards = {
-    {type = "banana_kush", rewardMin = 5, rewardMax = 6, item = 'weed_banana-kush', label = 'Banana Kush 1G'},
-    {type = "blue_dream", rewardMin = 4, rewardMax = 6, item = 'weed_blue-dream', label = 'Blue Dream 1G'},
-    {type = "purplehaze", rewardMin = 3, rewardMax = 5, item = 'weed_purple-haze', label = 'Purple Haze 1G'},
-    {type = "og_kush", rewardMin = 2, rewardMax = 3, item = 'weed_og-kush', label = 'OGKush 1G'},
+    {type = "banana_kush", rewardMin = 5, rewardMax = 6, item = 'banana_kush_weed', label = 'Banana Kush 1G'},
+    {type = "blue_dream", rewardMin = 4, rewardMax = 6, item = 'blue_dream_weed', label = 'Blue Dream 1G'},
+    {type = "purplehaze", rewardMin = 3, rewardMax = 5, item = 'purple_haze_weed', label = 'Purple Haze 1G'},
+    {type = "og_kush", rewardMin = 2, rewardMax = 3, item = 'og_kush_weed', label = 'OGKush 1G'},
 }
 
 Config.MaxPlantCount = 40
