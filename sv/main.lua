@@ -1,5 +1,4 @@
-QBCore = nil
-TriggerEvent('QBCore:GetObject', function(obj) QBCore = obj end)
+local QBCore = exports['qb-core']:GetCoreObject()
 
 local PlantsLoaded = false
 
@@ -25,20 +24,20 @@ QBCore.Functions.CreateUseableItem("weed_og-kush_seed", function(source, item)
     TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items['weed_og-kush_seed'], "remove")
 end)
 
-QBCore.Functions.CreateUseableItem('weed_bananakush_seed', function(source, item)
+QBCore.Functions.CreateUseableItem('banana_kush_seed', function(source, item)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
     TriggerClientEvent('orp:weed:client:plantNewSeed', src, 'banana_kush')
     Player.Functions.RemoveItem('weed_bananakush_seed', 1)
-    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items['weed_bananakush_seed'], "remove")
+    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items['banana_kush_seed'], "remove")
 end)
 
-QBCore.Functions.CreateUseableItem('weed_bluedream_seed', function(source, item)
+QBCore.Functions.CreateUseableItem('blue_dream_seed', function(source, item)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
     TriggerClientEvent('orp:weed:client:plantNewSeed', src, 'blue_dream')
     Player.Functions.RemoveItem('weed_bluedream_seed', 1)
-    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items['weed_bluedream_seed'], "remove")
+    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items['blue_dream_seed'], "remove")
 end)
 
 QBCore.Functions.CreateUseableItem('weed_purple-haze_seed', function(source, item)
@@ -53,7 +52,7 @@ RegisterServerEvent('orp:weed:server:saveWeedPlant')
 AddEventHandler('orp:weed:server:saveWeedPlant', function(data, plantId)
     local data = json.encode(data)
 
-    exports.ghmattimysql:execute('INSERT INTO weed_plants (properties, plantid) VALUES (@properties, @plantid)', {
+    exports.oxmysql:execute('INSERT INTO weed_plants (properties, plantid) VALUES (@properties, @plantid)', {
         ['@properties'] = data,
         ['@plantid'] = plantId
     })
@@ -216,8 +215,8 @@ AddEventHandler('orp:weed:server:waterPlant', function(plantId)
         end
     end
 
-    Player.Functions.RemoveItem('water_bottle', 1)
-    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items['water_bottle'], "remove")
+    Player.Functions.RemoveItem('raine', 1)
+    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items['raine'], "remove")
     TriggerEvent('orp:weed:server:updatePlants')
 end)
 
@@ -235,20 +234,20 @@ AddEventHandler('orp:weed:server:feedPlant', function(plantId)
         end
     end
 
-    Player.Functions.RemoveItem('fertilizer', 1)
-    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items['fertilizer'], "remove")
+    Player.Functions.RemoveItem('weed_nutrition', 1)
+    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items['weed_nutrition'], "remove")
     TriggerEvent('orp:weed:server:updatePlants')
 end)
 
 RegisterServerEvent('orp:weed:server:updateWeedPlant')
 AddEventHandler('orp:weed:server:updateWeedPlant', function(id, data)
-    local result = exports.ghmattimysql:executeSync('SELECT * FROM weed_plants WHERE plantid = @plantid', {
+    local result = exports.oxmysql:executeSync('SELECT * FROM weed_plants WHERE plantid = @plantid', {
         ['@plantid'] = id
     })
 
     if result[1] then
         local newData = json.encode(data)
-        exports.ghmattimysql:execute('UPDATE weed_plants SET properties = @properties WHERE plantid = @id', {
+        exports.oxmysql:execute('UPDATE weed_plants SET properties = @properties WHERE plantid = @id', {
             ['@properties'] = newData,
             ['@id'] = id
         })
@@ -257,14 +256,14 @@ end)
 
 RegisterServerEvent('orp:weed:server:weedPlantRemoved')
 AddEventHandler('orp:weed:server:weedPlantRemoved', function(plantId)
-    local result = exports.ghmattimysql:executeSync('SELECT * FROM weed_plants')
+    local result = exports.oxmysql:executeSync('SELECT * FROM weed_plants')
 
     if result then
         for i = 1, #result do
             local plantData = json.decode(result[i].properties)
             if plantData.id == plantId then
 
-                exports.ghmattimysql:execute('DELETE FROM weed_plants WHERE id = @id', {
+                exports.oxmysql:execute('DELETE FROM weed_plants WHERE id = @id', {
                     ['@id'] = result[i].id
                 })
 
@@ -281,7 +280,7 @@ end)
 RegisterServerEvent('orp:weed:server:getWeedPlants')
 AddEventHandler('orp:weed:server:getWeedPlants', function()
     local data = {}
-    local result = exports.ghmattimysql:executeSync('SELECT * FROM weed_plants')
+    local result = exports.oxmysql:executeSync('SELECT * FROM weed_plants')
 
     if result[1] then
         for i = 1, #result do
