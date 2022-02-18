@@ -224,7 +224,7 @@ Citizen.CreateThread(function()
                             DrawText3D(v.x, v.y, v.z - 0.18, '~b~G~w~ - Water      ~y~H~w~ - Feed')
                             if IsControlJustReleased(0, Keys["G"]) then
                                 if v.id == plant.id then
-                                    TriggerServerEvent('orp:server:checkPlayerHasThisItem', 'raine', 'orp:weed:client:waterPlant', true)
+                                    TriggerServerEvent('orp:server:checkPlayerHasThisItem', 'water_bottle', 'orp:weed:client:waterPlant', true)
                                 end
                             elseif IsControlJustReleased(0, Keys["H"]) then
                                 if v.id == plant.id then
